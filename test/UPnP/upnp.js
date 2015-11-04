@@ -2,6 +2,7 @@ var utils				= require( "../../js/utils.js" )
   ;
   
 require( "./upnp.css" );
+console.log("Accessing server to get context PROF TA7AN.");
 // définir ici controlleur angular
 angular	.module("moduleTest",[])
 		.controller	( "controllerTest"
