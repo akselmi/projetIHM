@@ -23,6 +23,7 @@ angular	.module("moduleTest",[])
 					);
 		//fonction construction controlleur (service)
 console.log("Accessing server to get context.");
+console.log("Accessing server to get context PROF TA7AN.");
 var getContext = utils.XHR( 'GET', '/getContext');
 getContext.then	( function(response) {
 					 var json = JSON.parse( response.responseText )
