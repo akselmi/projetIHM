@@ -1,14 +1,20 @@
 <!doctype html>
 
-<html>
+<html ng-app="moduleTest">
 <head>	
 	<title>UPnP</title>
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="bundleUPnP.css"></link>
+	<script src="bower_components/angular/angular.js"></script>
 	<script src="bundleUPnP.js" defer></script>
 </head>
-<body>
+<body ng-controller="controllerTest as ctrl">
 	<h1>UPnP</h1>
 	<p>Look at the console and the javascript file...</p>
+	
+	<p ng-repeat="brick in ctrl.data.bricks">
+		<img ng-src="{{brick.iconURL}}" style="width:100px;height:100px"></img>
+		{{brick.name}}
+	</p>
 </body>
 </html>
