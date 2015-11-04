@@ -48,8 +48,26 @@
 	  ;
 	  
 	__webpack_require__( 52 );
-
-
+	// définir ici controlleur angular
+	angular	.module("moduleTest",[])
+			.controller	( "controllerTest"
+						, function($http,$scope)
+							{
+								var ctrl = this;
+								//ajout attribut au controlleur (cette instance)
+								this.data = {} ; //résultat : objet(bricks etc...)
+								
+								// faire la requête pour avoir la liste des bricks
+								$http.get('/getContext').then(function(x){
+									console.log(x);
+									ctrl.data=x.data;
+									}
+									); // peut être une promise donc on crée une fonction
+								// abonnement sur les briques (appear disapear)
+								// ici uniquement stockage des données / formatage
+							}
+						);
+			//fonction construction controlleur (service)
 	console.log("Accessing server to get context.");
 	var getContext = utils.XHR( 'GET', '/getContext');
 	getContext.then	( function(response) {
@@ -68,8 +86,6 @@
 				, function(json) {console.log("brickDisappears:", json);
 								 }
 				);
-
-
 
 /***/ },
 /* 1 */
@@ -116,7 +132,7 @@
 								);
 		}
 		, initIO: function() {
-			 this.io = io.apply(null, arguments);
+			 this.io = this.io || io.apply(null, arguments);
 			}
 		// , io	: io()
 		, call	: function(objectId, method, params, cb) {
@@ -128,12 +144,15 @@
 				 call.callId = callId++;
 				}
 			 // console.log( "Calling", call);
-			 utils.io.emit	( 'call', call
-							, function(data){
-								 // console.log("Call", call.callId, " returns", data);
-								 if(cb) {cb(data);}
-								}
-							);
+			 return new Promise	( function(resolve, reject) {
+				 utils.io.emit	( 'call', call
+								, function(data){
+									 // console.log("Call", call.callId, " returns", data);
+									 if(cb) {cb(data);}
+									 resolve(data);
+									}
+								);
+				});
 			}
 		, getUrlEncodedParameters	: function(a) {
 			 if(typeof a === 'string') {
